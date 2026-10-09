@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["WWW", "PGP", "PPP"],
+  "key": {
+    "W": { "tag": "minecraft:wool" },
+    "P": { "tag": "minecraft:planks" },
+    "G": { "item": "minecraft:gold_ingot" }
+  },
+  "result": { "id": "retro64plus:coin_shop", "count": 1 }
+}

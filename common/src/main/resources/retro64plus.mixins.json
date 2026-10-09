@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.nanobuntv.retro64plus.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["BlockStateBaseMixin", "EnderDragonMixin", "LivingEntityMixin", "LootTableMixin", "PlayerAdvancementsMixin", "PlayerDimensionsMixin", "PlayerMixin",
+    "ServerGamePacketListenerImplMixin", "ServerPlayerGameModeMixin", "ServerPlayerMixin", "SpawnPlacementsInvoker", "WardenMixin"],
+  "client": [${mixins_client}],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

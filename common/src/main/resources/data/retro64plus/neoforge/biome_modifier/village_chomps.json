@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#retro64plus:spawns_sm64_enemies",
+  "features": "retro64plus:village_chomp",
+  "step": "top_layer_modification"
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "pounds=0": {
+      "model": "retro64plus:block/chomp_post"
+    },
+    "pounds=1": {
+      "model": "retro64plus:block/chomp_post"
+    },
+    "pounds=2": {
+      "model": "retro64plus:block/chomp_post"
+    },
+    "pounds=3": {
+      "model": "retro64plus:block/chomp_post"
+    }
+  }
+}

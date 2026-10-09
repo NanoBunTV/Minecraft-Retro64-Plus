@@ -1,0 +1,51 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "${mod_license}"
+issueTrackerURL = "${mod_sources}/issues"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+authors = "${mod_authors}"
+credits = "Based on Retro64 by dylanpdx and Retro64 contributors"
+description = '''${mod_description}'''
+displayURL = "https://modrinth.com/mod/${mod_slug}"
+${neoforge_icon_key} = "${mod_icon}"
+
+[[mixins]]
+config = "${mod_id}.mixins.json"
+
+# D31: holds Controllable and Controlify back while you're Mario; applies only when they're installed.
+[[mixins]]
+config = "${mod_id}.compat.mixins.json"
+
+[[dependencies.${mod_id}]]
+modId = "neoforge"
+type = "required"
+versionRange = "${neoforge_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "${yacl_id}"
+type = "required"
+versionRange = "[${yacl_range},)"
+ordering = "NONE"
+side = "BOTH"
+
+# D128: the original Retro64 can't run beside its rewrite (the same native library, both replace the player).
+[[dependencies.${mod_id}]]
+modId = "retro64"
+type = "incompatible"
+reason = "Retro64 Plus is a rewrite of Retro64 and replaces it. Remove Retro64."
+versionRange = "[0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+type = "required"
+versionRange = "${mc_compat_neoforge}"
+ordering = "NONE"
+side = "BOTH"

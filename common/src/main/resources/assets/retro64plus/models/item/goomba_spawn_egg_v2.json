@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "retro64plus:item/goomba_spawn_egg"
+  }
+}

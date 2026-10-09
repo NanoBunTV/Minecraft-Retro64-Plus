@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": ["${mod_authors}"],
+  "contributors": ["dylanpdx and Retro64 contributors (original Retro64 mod)"],
+  "license": "${mod_license}",
+  "icon": "${mod_icon}",
+  "contact": {
+    "homepage": "https://modrinth.com/mod/${mod_slug}",
+    "sources": "${mod_sources}",
+    "issues": "${mod_sources}/issues"
+  },
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.nanobuntv.retro64plus.fabric.Retro64PlusFabric"],
+    "client": ["com.nanobuntv.retro64plus.fabric.Retro64PlusFabricClient"],
+    "modmenu": ["com.nanobuntv.retro64plus.fabric.ModMenuEntry"]
+  },
+  "mixins": ["${mod_id}.mixins.json", "${mod_id}.compat.mixins.json"],
+  "breaks": {
+    "retro64": "*"
+  },
+  "suggests": {
+    "modmenu": "*"
+  },
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": "*",
+    "${yacl_id}": ">=${yacl_range}",
+    "minecraft": "${mc_compat_fabric}",
+    "java": ">=${java_version}"
+  }
+}

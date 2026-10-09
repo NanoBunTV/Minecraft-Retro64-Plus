@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "retro64plus:block/coin_shop" },
+    "facing=east": { "model": "retro64plus:block/coin_shop", "y": 90 },
+    "facing=south": { "model": "retro64plus:block/coin_shop", "y": 180 },
+    "facing=west": { "model": "retro64plus:block/coin_shop", "y": 270 }
+  }
+}

@@ -1,0 +1,22 @@
+.gradle/
+build/
+out/
+run/
+runs/
+.idea/
+*.iml
+.vscode/
+zig-out/
+zig-cache/
+.zig-cache/
+.claude/settings.local.json
+.kotlin/
+*.log
+*.lnk
+_Release/
+# Private design docs, kept local (D131).
+Docs/
+# Never commit ROMs.
+*.z64
+*.n64
+*.v64
