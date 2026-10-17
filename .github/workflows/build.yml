@@ -1,0 +1,92 @@
+# Builds Retro64 Plus from source on GitHub's machines (D135): the native library with Zig from native/, then every
+# loader jar on every Minecraft version with it inside. Nothing prebuilt goes in, so anyone can check the library
+# in a jar came from this repository's source.
+#
+# - Every push and pull request: the jars are kept as the run's "jars" artifact.
+# - A pushed tag v<version> (e.g. v1.0.0): the same jars are also attached to a GitHub Release for that tag, and
+#   those are the files uploaded to Modrinth and CurseForge (Docs/Publishing.md).
+#
+# The run's summary lists the SHA-256 of both native libraries and every jar, and each file gets a signed build
+# provenance attestation (check one with `gh attestation verify <file> --repo NanoBunTV/Minecraft-Retro64-Plus`).
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # create the GitHub Release on a tag
+      id-token: write       # sign the attestations
+      attestations: write
+    steps:
+      - uses: actions/checkout@v4
+
+      # Ten Minecraft setups need a few GB; drop preinstalled toolchains this build never uses.
+      - name: Free disk space
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/share/boost
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: |
+            21
+            25
+
+      - uses: mlugg/setup-zig@v2
+        with:
+          version: 0.17.0
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build
+        run: |
+          chmod +x gradlew
+          ./gradlew build --stacktrace
+
+      - name: Collect jars and hashes
+        run: |
+          mkdir dist
+          cp */versions/*/build/libs/retro64plus-*.jar dist/
+          rm -f dist/*-sources.jar
+          {
+            echo "## Native libraries (built from native/ by this run)"
+            echo '```'
+            (cd native/zig-out && sha256sum natives/*/*)
+            echo '```'
+            echo "## Jars"
+            echo '```'
+            (cd dist && sha256sum *.jar)
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: jars
+          path: dist/*.jar
+          if-no-files-found: error
+
+      - name: Attest build provenance
+        if: github.event_name != 'pull_request'
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            dist/*.jar
+            native/zig-out/natives/*/*
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/*.jar \
+            --title "Retro64 Plus ${GITHUB_REF_NAME#v}" \
+            --notes "Built from ${GITHUB_SHA} by [this workflow run](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}), which lists every file's SHA-256. Download the mod from [Modrinth](https://modrinth.com/mod/retro64-plus)."

@@ -21,9 +21,10 @@ tasks.named<JavaCompile>("compileJava") {
 tasks.processResources {
     dependsOn(commonResources)
     from(commonResources)
-    // The native library (D7), extracted on the client at runtime (M1): the committed builds in natives/ (D132,
-    // `gradlew updateNatives` rebuilds them), with libsm64's license and the exact sources beside them.
-    from(rootProject.file("natives")) { into("natives") }
+    // The native library (D7), extracted on the client at runtime (M1): built from native/ by :buildNative (D135),
+    // with libsm64's license and the exact sources beside it.
+    dependsOn(":buildNative")
+    from(rootProject.file("native/zig-out/natives")) { into("natives") }
     from(rootProject.file("native")) { include("LICENSE-libsm64.md", "SOURCE.md"); into("natives") }
 }
 

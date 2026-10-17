@@ -13,7 +13,6 @@ zig-cache/
 .kotlin/
 *.log
 *.lnk
-_Release/
 # Private design docs, kept local (D131).
 Docs/
 # Never commit ROMs.

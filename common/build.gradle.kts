@@ -53,9 +53,10 @@ tasks.test {
     }
 }
 
-// The committed native builds (natives/<os>-<arch>/, D132), in the same layout the loader jars carry.
+// The native library built from native/ (natives/<os>-<arch>/, D135), in the same layout the loader jars carry.
 tasks.processTestResources {
-    from(rootProject.file("natives")) { into("natives") }
+    dependsOn(":buildNative")
+    from(rootProject.file("native/zig-out/natives")) { into("natives") }
 }
 
 // Hand the common sources and resources to the loader projects. For an inactive Stonecutter version these are

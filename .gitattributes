@@ -1,6 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-# The committed native builds (D132).
+# Native libraries are never committed (D135); marked binary in case one is ever added by mistake.
 *.dll binary
 *.so binary
 *.dylib binary
