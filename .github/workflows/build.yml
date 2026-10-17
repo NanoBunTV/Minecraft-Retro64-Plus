@@ -55,7 +55,8 @@ jobs:
       - name: Collect jars and hashes
         run: |
           mkdir dist
-          cp */versions/*/build/libs/retro64plus-*.jar dist/
+          # Only the loader jars: common's jar is an internal build step, not a mod.
+          cp fabric/versions/*/build/libs/retro64plus-*.jar neoforge/versions/*/build/libs/retro64plus-*.jar dist/
           rm -f dist/*-sources.jar
           {
             echo "## Native libraries (built from native/ by this run)"
